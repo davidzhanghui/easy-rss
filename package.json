@@ -8,6 +8,7 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
+    "build:public": "VITE_RSS_PROXY=auto VITE_RSS_PROXY_URL= npm run build",
     "preview": "vite preview",
     "lint": "tsc --noEmit",
     "test": "vitest run",
@@ -59,7 +60,7 @@
     "type": "git",
     "url": "git+https://github.com/davidzhanghui/easy-rss.git"
   },
-  "homepage": "https://github.com/davidzhanghui/easy-rss#readme",
+  "homepage": "https://easy-rss.pages.dev",
   "bugs": {
     "url": "https://github.com/davidzhanghui/easy-rss/issues"
   }

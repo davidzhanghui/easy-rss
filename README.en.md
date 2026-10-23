@@ -2,7 +2,7 @@
 
 [![CI](../../actions/workflows/ci.yml/badge.svg)](../../actions/workflows/ci.yml) [![License: MIT](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 
-[中文](README.md) · **English**
+[中文](README.md) · **English** · **[Live demo](https://easy-rss.pages.dev)**
 
 A **frontend-only, local-first** RSS reader: subscribe, fetch and parse RSS/Atom,
 read in a three-pane workspace, star and organize, search, import/export OPML.
@@ -48,6 +48,22 @@ npm run preview  # preview the production build
 npm test         # unit tests (Vitest)
 npm run check    # lint + test + build
 ```
+
+> The live demo is a plain static deployment with **no fetch proxy configured**, so feeds that block
+> cross-origin requests will fail to refresh (the seeded demo data is unaffected). To read arbitrary feeds,
+> run it locally with a [self-hosted proxy](#self-hosted-proxy-optional).
+
+### Deploying as a static site (Cloudflare Pages, etc.)
+
+```bash
+npm run build:public   # NOT `npm run build` — see the warning below
+npx wrangler pages deploy dist --project-name <your-project>
+```
+
+> ⚠️ Vite compiles every `VITE_*` variable from `.env` **into the public JS bundle**. If your local `.env`
+> has a `VITE_RSS_PROXY_URL` containing a token, deploying the output of `npm run build` exposes that token
+> to every visitor. `npm run build:public` overrides those variables. Sanity check before deploying:
+> `grep -r "<your token>" dist` must print nothing.
 
 ## Configuration
 

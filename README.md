@@ -2,7 +2,7 @@
 
 [![CI](../../actions/workflows/ci.yml/badge.svg)](../../actions/workflows/ci.yml) [![License: MIT](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 
-**中文** · [English](README.en.md)
+**中文** · [English](README.en.md) · **[在线 Demo](https://easy-rss.pages.dev)**
 
 一个**纯前端、本地优先**的 RSS 阅读器：添加订阅、抓取解析 RSS/Atom、
 三栏工作区阅读、收藏管理、搜索过滤、OPML 导入导出。
@@ -59,6 +59,9 @@ npm run preview  # 预览生产构建
 npm test         # 单元测试（Vitest）
 npm run check    # lint + test + build，提交前运行
 ```
+
+> 在线 Demo 是纯静态部署、**没有配置抓取代理**，所以不允许跨域访问的订阅源会抓取失败（演示数据不受影响）。
+> 想抓取任意源，请本地运行并配置[自建代理](#自建-rss-代理可选)。
 
 首次打开会播种一批演示订阅和文章（带「演示」徽标），侧栏底部或设置页可一键清除。
 
@@ -171,6 +174,18 @@ UI（Zustand 只存选择/过滤等 UI 状态）
 - **失效粒度**：`useInvalidate('counts', 'articles')` 之类按需失效；
   收藏/已读只重取列表与计数，不动 feeds / folders
 - **搜索**：`title/snippet/author` 的包含匹配，在索引游标上过滤，不额外物化
+
+### 部署为静态站点（Cloudflare Pages 等）
+
+```bash
+npm run build:public   # 不是 npm run build！见下方说明
+npx wrangler pages deploy dist --project-name <your-project>
+```
+
+> ⚠️ Vite 会把 `.env` 里的 `VITE_*` 变量**直接编译进公开的 JS**。如果你本地 `.env` 配了带 token 的
+> `VITE_RSS_PROXY_URL`，用 `npm run build` 构建再部署会把 token 暴露给所有访问者。
+> `npm run build:public` 会覆盖这两个变量，产物里不含代理地址。部署前建议自检：
+> `grep -r "<你的token>" dist` 应当没有输出。
 
 ## 隐私与安全
 
