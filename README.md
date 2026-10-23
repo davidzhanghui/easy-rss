@@ -2,7 +2,7 @@
 
 [![CI](../../actions/workflows/ci.yml/badge.svg)](../../actions/workflows/ci.yml) [![License: MIT](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 
-**中文** · [English](README.en.md) · **[在线 Demo](https://easy-rss.pages.dev)**
+**中文** · [English](README.en.md) · **[在线 Demo](https://easy-rss.zkf15138.workers.dev)**
 
 一个**纯前端、本地优先**的 RSS 阅读器：添加订阅、抓取解析 RSS/Atom、
 三栏工作区阅读、收藏管理、搜索过滤、OPML 导入导出。
@@ -175,12 +175,15 @@ UI（Zustand 只存选择/过滤等 UI 状态）
   收藏/已读只重取列表与计数，不动 feeds / folders
 - **搜索**：`title/snippet/author` 的包含匹配，在索引游标上过滤，不额外物化
 
-### 部署为静态站点（Cloudflare Pages 等）
+### 部署为静态站点（Cloudflare 等）
+
+仓库自带 `wrangler.jsonc`（Workers 静态资源 + SPA 回退）。在 Cloudflare 控制台把仓库连到一个同名 Worker 项目即可随 `main` 自动部署；也可以手动部署：
 
 ```bash
-npm run build:public   # 不是 npm run build！见下方说明
-npx wrangler pages deploy dist --project-name <your-project>
+npx wrangler deploy    # 构建由 wrangler.jsonc 触发，用的是 build:public
 ```
+
+部署到其它静态托管时请自行用 `npm run build:public`，而不是 `npm run build`：
 
 > ⚠️ Vite 会把 `.env` 里的 `VITE_*` 变量**直接编译进公开的 JS**。如果你本地 `.env` 配了带 token 的
 > `VITE_RSS_PROXY_URL`，用 `npm run build` 构建再部署会把 token 暴露给所有访问者。

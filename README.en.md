@@ -2,7 +2,7 @@
 
 [![CI](../../actions/workflows/ci.yml/badge.svg)](../../actions/workflows/ci.yml) [![License: MIT](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 
-[中文](README.md) · **English** · **[Live demo](https://easy-rss.pages.dev)**
+[中文](README.md) · **English** · **[Live demo](https://easy-rss.zkf15138.workers.dev)**
 
 A **frontend-only, local-first** RSS reader: subscribe, fetch and parse RSS/Atom,
 read in a three-pane workspace, star and organize, search, import/export OPML.
@@ -53,12 +53,15 @@ npm run check    # lint + test + build
 > cross-origin requests will fail to refresh (the seeded demo data is unaffected). To read arbitrary feeds,
 > run it locally with a [self-hosted proxy](#self-hosted-proxy-optional).
 
-### Deploying as a static site (Cloudflare Pages, etc.)
+### Deploying as a static site (Cloudflare, etc.)
+
+The repo ships a `wrangler.jsonc` (Workers static assets + SPA fallback). Connect the repo to a same-named Worker project in the Cloudflare dashboard to auto-deploy on every push to `main`, or deploy manually:
 
 ```bash
-npm run build:public   # NOT `npm run build` — see the warning below
-npx wrangler pages deploy dist --project-name <your-project>
+npx wrangler deploy    # the build is triggered by wrangler.jsonc and uses build:public
 ```
+
+For any other static host, build with `npm run build:public`, not `npm run build`:
 
 > ⚠️ Vite compiles every `VITE_*` variable from `.env` **into the public JS bundle**. If your local `.env`
 > has a `VITE_RSS_PROXY_URL` containing a token, deploying the output of `npm run build` exposes that token
