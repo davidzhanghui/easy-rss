@@ -54,10 +54,7 @@ export function Reader({ articleId, onBack, showBack }: Props) {
     };
   }, [article?.id, article?.content]);
 
-  const safeHtml = useMemo(
-    () => (article?.content ? sanitizeArticleHtml(article.content) : ''),
-    [article?.content],
-  );
+  const safeHtml = useMemo(() => (article?.content ? sanitizeArticleHtml(article.content) : ''), [article?.content]);
 
   if (!articleId) {
     return (
@@ -92,10 +89,14 @@ export function Reader({ articleId, onBack, showBack }: Props) {
     );
   }
 
-  const toggleStar = () => void ArticleService.toggleStar(article.id, !article.isStarred).then(() => invalidate('counts', 'articles'));
-  const toggleReadLater = () => void ArticleService.toggleReadLater(article.id, !article.isReadLater).then(() => invalidate('counts', 'articles'));
+  const toggleStar = () =>
+    void ArticleService.toggleStar(article.id, !article.isStarred).then(() => invalidate('counts', 'articles'));
+  const toggleReadLater = () =>
+    void ArticleService.toggleReadLater(article.id, !article.isReadLater).then(() => invalidate('counts', 'articles'));
   const toggleRead = () =>
-    void (article.isRead ? ArticleService.markUnread(article.id) : ArticleService.markRead(article.id)).then(() => invalidate('counts', 'articles'));
+    void (article.isRead ? ArticleService.markUnread(article.id) : ArticleService.markRead(article.id)).then(() =>
+      invalidate('counts', 'articles'),
+    );
 
   const copyLink = async () => {
     try {
@@ -125,11 +126,7 @@ export function Reader({ articleId, onBack, showBack }: Props) {
         {/* tool row */}
         <div className="flex flex-wrap items-center gap-1.5">
           {showBack && (
-            <button
-              onClick={onBack}
-              aria-label={t('back')}
-              className="icon-btn mr-1 lg:hidden"
-            >
+            <button onClick={onBack} aria-label={t('back')} className="icon-btn mr-1 lg:hidden">
               <ArrowLeft size={17} />
             </button>
           )}
@@ -186,7 +183,10 @@ export function Reader({ articleId, onBack, showBack }: Props) {
             </>
           )}
           <span aria-hidden>·</span>
-          <time dateTime={article.publishedAt ? new Date(article.publishedAt).toISOString() : undefined} title={formatFull(article.publishedAt)}>
+          <time
+            dateTime={article.publishedAt ? new Date(article.publishedAt).toISOString() : undefined}
+            title={formatFull(article.publishedAt)}
+          >
             {timeAgo(article.publishedAt, t('justNow'), lang)}
           </time>
         </div>

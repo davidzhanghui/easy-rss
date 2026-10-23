@@ -1,15 +1,6 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import {
-  ArrowDownWideNarrow,
-  CheckCheck,
-  Inbox,
-  RefreshCw,
-  SearchX,
-  Star,
-  Trash2,
-  X,
-} from 'lucide-react';
+import { ArrowDownWideNarrow, CheckCheck, Inbox, RefreshCw, SearchX, Star, Trash2, X } from 'lucide-react';
 import type { SmartView } from '../types';
 import { useT } from '../hooks/useT';
 import { useArticleList, useFeeds, useInvalidate } from '../hooks/useData';
@@ -51,13 +42,12 @@ export function ArticleList({ view, feedId }: Props) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [view, feedId, searchQuery, sort, tab]);
 
-  const {
-    data,
-    isLoading,
-    isFetchingNextPage,
-    hasNextPage,
-    fetchNextPage,
-  } = useArticleList({ view: effectiveView, feedId, query: searchQuery, sort });
+  const { data, isLoading, isFetchingNextPage, hasNextPage, fetchNextPage } = useArticleList({
+    view: effectiveView,
+    feedId,
+    query: searchQuery,
+    sort,
+  });
   const items = useMemo(() => data?.pages.flatMap((p) => p.items) ?? [], [data]);
   const total = data?.pages[0]?.total ?? 0;
 
@@ -81,8 +71,7 @@ export function ArticleList({ view, feedId }: Props) {
     return () => ob.disconnect();
   }, [hasNextPage, isFetchingNextPage, fetchNextPage]);
 
-  const isDesktop = () =>
-    window.matchMedia('(min-width: 1024px)').matches;
+  const isDesktop = () => window.matchMedia('(min-width: 1024px)').matches;
 
   const openArticle = useCallback(
     (id: string) => {
@@ -101,7 +90,10 @@ export function ArticleList({ view, feedId }: Props) {
   const moveSelection = useCallback(
     (dir: 1 | -1) => {
       if (items.length === 0) return;
-      const next = Math.min(items.length - 1, Math.max(0, (selectedIdx < 0 ? (dir === 1 ? -1 : 0) : selectedIdx) + dir));
+      const next = Math.min(
+        items.length - 1,
+        Math.max(0, (selectedIdx < 0 ? (dir === 1 ? -1 : 0) : selectedIdx) + dir),
+      );
       const art = items[next];
       setUI({ selectedArticleId: art.id });
       document.getElementById(`article-${CSS.escape(art.id)}`)?.scrollIntoView({ block: 'nearest' });
@@ -113,13 +105,17 @@ export function ArticleList({ view, feedId }: Props) {
 
   const toggleStarSelected = useCallback(() => {
     if (!currentArticle) return;
-    void ArticleService.toggleStar(currentArticle.id, !currentArticle.isStarred).then(() => invalidate('counts', 'articles'));
+    void ArticleService.toggleStar(currentArticle.id, !currentArticle.isStarred).then(() =>
+      invalidate('counts', 'articles'),
+    );
   }, [currentArticle, invalidate]);
 
   const markSelected = useCallback(
     (read: boolean) => {
       if (!currentArticle) return;
-      void (read ? ArticleService.markRead(currentArticle.id) : ArticleService.markUnread(currentArticle.id)).then(() => invalidate('counts', 'articles'));
+      void (read ? ArticleService.markRead(currentArticle.id) : ArticleService.markUnread(currentArticle.id)).then(() =>
+        invalidate('counts', 'articles'),
+      );
     },
     [currentArticle, invalidate],
   );
@@ -192,14 +188,21 @@ export function ArticleList({ view, feedId }: Props) {
       {/* List header */}
       <div className="shrink-0 border-b border-hairline px-4 pb-3 pt-4 sm:px-5">
         <div className="flex items-baseline gap-2.5">
-          <h1 className="truncate font-display text-[21px] font-semibold tracking-tight text-ink sm:text-[23px]">{title}</h1>
+          <h1 className="truncate font-display text-[21px] font-semibold tracking-tight text-ink sm:text-[23px]">
+            {title}
+          </h1>
           <span className="shrink-0 text-xs tabular-nums text-faint">
             {total} {t('articlesCount')}
           </span>
           <div className="ml-auto flex shrink-0 items-center gap-0.5 self-center">
             {feedId && (
               <button
-                onClick={() => void ArticleService.markFeedRead(feedId).then(() => { invalidate('counts', 'articles'); toast(t('toastMarkedRead'), 'info'); })}
+                onClick={() =>
+                  void ArticleService.markFeedRead(feedId).then(() => {
+                    invalidate('counts', 'articles');
+                    toast(t('toastMarkedRead'), 'info');
+                  })
+                }
                 aria-label={t('markAllRead')}
                 title={t('markAllRead')}
                 className="icon-btn"
@@ -248,23 +251,29 @@ export function ArticleList({ view, feedId }: Props) {
             );
           })}
           {!feedId && view === 'read-later' && (
-            <span className="tab-pill is-active inline-flex items-center">
-              {t('readLater')}
-            </span>
+            <span className="tab-pill is-active inline-flex items-center">{t('readLater')}</span>
           )}
         </div>
 
         {/* Batch bar */}
         {selectedIds.length > 0 && (
           <div className="animate-fade-up mt-2.5 flex flex-wrap items-center gap-1 rounded-xl bg-toastbg px-2 py-1.5 text-toastfg">
-            <span className="px-2 text-xs font-medium">{selectedIds.length} {t('selected')}</span>
+            <span className="px-2 text-xs font-medium">
+              {selectedIds.length} {t('selected')}
+            </span>
             <BatchBtn onClick={() => void batch((ids) => ArticleService.markManyRead(ids))}>{t('markAsRead')}</BatchBtn>
-            <BatchBtn onClick={() => void batch((ids) => ArticleService.markManyUnread(ids))}>{t('markAsUnread')}</BatchBtn>
+            <BatchBtn onClick={() => void batch((ids) => ArticleService.markManyUnread(ids))}>
+              {t('markAsUnread')}
+            </BatchBtn>
             <BatchBtn onClick={() => void batch((ids) => ArticleService.starMany(ids, true))}>{t('star')}</BatchBtn>
             <BatchBtn onClick={() => void batch((ids) => ArticleService.deleteMany(ids), t('toastFeedDeleted'))}>
               <Trash2 size={13} />
             </BatchBtn>
-            <button onClick={() => setUI({ selectedIds: [] })} aria-label={t('clearSelection')} className="icon-btn icon-btn--sm ml-auto text-toastfg/70 hover:bg-white/10 hover:text-toastfg">
+            <button
+              onClick={() => setUI({ selectedIds: [] })}
+              aria-label={t('clearSelection')}
+              className="icon-btn icon-btn--sm ml-auto text-toastfg/70 hover:bg-white/10 hover:text-toastfg"
+            >
               <X size={15} />
             </button>
           </div>
@@ -306,10 +315,7 @@ export function ArticleList({ view, feedId }: Props) {
             }
             action={
               !searchQuery && !feedId && view === 'all' ? (
-                <button
-                  onClick={() => setUI({ addFeedOpen: true })}
-                  className="btn btn--primary"
-                >
+                <button onClick={() => setUI({ addFeedOpen: true })} className="btn btn--primary">
                   {t('addFeed')}
                 </button>
               ) : undefined
@@ -322,9 +328,7 @@ export function ArticleList({ view, feedId }: Props) {
                 onClick={() => setUI({ selectedIds: allChecked ? [] : allLoadedIds })}
                 className="flex w-full items-center gap-2 px-4 py-1.5 text-left text-xs text-faint hover:text-muted sm:px-5"
               >
-                <span className={cn('checkbox', allChecked && 'is-on')}>
-                  {allChecked && <CheckCheck size={11} />}
-                </span>
+                <span className={cn('checkbox', allChecked && 'is-on')}>{allChecked && <CheckCheck size={11} />}</span>
                 {t('selectAll')}
               </button>
             )}
@@ -338,8 +342,14 @@ export function ArticleList({ view, feedId }: Props) {
                   checked={selectedIds.includes(a.id)}
                   selectMode={selectedIds.length > 0}
                   onOpen={() => openArticle(a.id)}
-                  onToggleStar={() => void ArticleService.toggleStar(a.id, !a.isStarred).then(() => invalidate('counts', 'articles'))}
-                  onToggleRead={() => void (a.isRead ? ArticleService.markUnread(a.id) : ArticleService.markRead(a.id)).then(() => invalidate('counts', 'articles'))}
+                  onToggleStar={() =>
+                    void ArticleService.toggleStar(a.id, !a.isStarred).then(() => invalidate('counts', 'articles'))
+                  }
+                  onToggleRead={() =>
+                    void (a.isRead ? ArticleService.markUnread(a.id) : ArticleService.markRead(a.id)).then(() =>
+                      invalidate('counts', 'articles'),
+                    )
+                  }
                   onToggleSelect={() => useUIStore.getState().toggleSelected(a.id)}
                 />
               ))}

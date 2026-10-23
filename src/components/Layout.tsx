@@ -27,11 +27,7 @@ export function Layout() {
 
         {/* main: sidebar | list | reader — each pane scrolls internally */}
         <div className="flex min-h-0 flex-1">
-          <aside
-            className="hidden shrink-0 bg-parchment lg:block"
-            style={{ width: sidebarWidth }}
-            aria-label="Sidebar"
-          >
+          <aside className="hidden shrink-0 bg-parchment lg:block" style={{ width: sidebarWidth }} aria-label="Sidebar">
             <Sidebar />
           </aside>
           <PaneResizer
@@ -94,9 +90,7 @@ function Tab({ to, icon, label }: { to: string; icon: React.ReactNode; label: st
     >
       {({ isActive }) => (
         <>
-          <span className={cn('rounded-full px-3 py-0.5 transition-colors', isActive && 'bg-coralsoft')}>
-            {icon}
-          </span>
+          <span className={cn('rounded-full px-3 py-0.5 transition-colors', isActive && 'bg-coralsoft')}>{icon}</span>
           <span className="max-w-full truncate px-1">{label}</span>
         </>
       )}

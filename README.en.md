@@ -46,7 +46,9 @@ npm run dev      # http://localhost:3100
 npm run build    # tsc -b && vite build → dist/
 npm run preview  # preview the production build
 npm test         # unit tests (Vitest)
-npm run check    # lint + test + build
+npm run lint     # tsc + ESLint
+npm run format   # Prettier (format:check to only verify)
+npm run check    # lint + format check + test + build
 ```
 
 > The live demo is a plain static deployment with **no fetch proxy configured**, so feeds that block
@@ -153,8 +155,8 @@ UI (Zustand holds selection/filter state only)
 
 - Subscriptions, articles and read state stay in your browser's IndexedDB / localStorage; the app has no backend, accounts or telemetry
 - Feed content is untrusted: HTML is sanitized with DOMPurify, links are limited to `http(s)`, images use `no-referrer`
-- **Third-party requests**: `index.html` loads fonts from Google Fonts, which exposes the visitor's IP to Google.
-  For a fully offline / zero-third-party build, remove that `<link>` and use system fonts or self-host the font files
+- **Self-hosted fonts**: fonts are bundled via `@fontsource` (`src/fonts.ts`); nothing is requested from Google Fonts, so visitor IPs are not leaked to a font service
+- **Third-party requests**: only the sample images in the demo articles come from `picsum.photos`; after clearing the demo data the app makes no third-party requests (fetching your feeds aside)
 - Report vulnerabilities privately — see [SECURITY.md](SECURITY.md)
 
 ## Known limitations

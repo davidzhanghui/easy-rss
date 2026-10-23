@@ -22,15 +22,24 @@ const ERR_MAP: Record<string, I18nKey> = {
 
 function attemptLabel(t: (k: I18nKey) => string, a: FetchAttempt): string {
   switch (a.code) {
-    case 'ok': return 'OK';
-    case 'cors-or-network': return t('diagDirectFail');
-    case 'connectionRefused': return t('diagRefused');
-    case 'timeout': return t('diagTimeout');
-    case 'rateLimited': return t('diagRateLimited');
-    case 'tooLarge': return t('diagTooLarge');
-    case 'not-configured': return t('diagNotConfigured');
-    case 'skipped': return t('diagSkipped');
-    case 'http': return `HTTP ${a.status ?? ''}`.trim();
+    case 'ok':
+      return 'OK';
+    case 'cors-or-network':
+      return t('diagDirectFail');
+    case 'connectionRefused':
+      return t('diagRefused');
+    case 'timeout':
+      return t('diagTimeout');
+    case 'rateLimited':
+      return t('diagRateLimited');
+    case 'tooLarge':
+      return t('diagTooLarge');
+    case 'not-configured':
+      return t('diagNotConfigured');
+    case 'skipped':
+      return t('diagSkipped');
+    case 'http':
+      return `HTTP ${a.status ?? ''}`.trim();
   }
 }
 
@@ -55,7 +64,7 @@ export function AddFeedModal() {
       setError(null);
       setLoading(false);
     }
-  }, [open ]);
+  }, [open]);
 
   const close = () => {
     if (!loading) setUI({ addFeedOpen: false });
@@ -102,11 +111,7 @@ export function AddFeedModal() {
         {folders.length > 0 && (
           <label className="flex flex-col gap-1.5 text-sm">
             <span className="font-medium text-strong">{t('folderLabel')}</span>
-            <select
-              value={folderId}
-              onChange={(e) => setFolderId(e.target.value)}
-              className="field text-sm"
-            >
+            <select value={folderId} onChange={(e) => setFolderId(e.target.value)} className="field text-sm">
               <option value="">{t('noFolder')}</option>
               {folders.map((f) => (
                 <option key={f.id} value={f.id}>
@@ -124,9 +129,7 @@ export function AddFeedModal() {
             </p>
             {error.attempts.length > 0 && (
               <details className="mt-1.5 text-xs">
-                <summary className="cursor-pointer text-muted hover:text-ink">
-                  {t('diagTitle')}
-                </summary>
+                <summary className="cursor-pointer text-muted hover:text-ink">{t('diagTitle')}</summary>
                 <ul className="mt-1 space-y-0.5 font-mono text-[11px] text-muted">
                   {error.attempts.map((a, i) => (
                     <li key={`${a.strategy}-${i}`}>
@@ -140,26 +143,15 @@ export function AddFeedModal() {
           </div>
         )}
         <div className="mt-1 flex justify-end gap-2">
-          <button
-            type="button"
-            onClick={close}
-            disabled={loading}
-            className="btn btn--ghost"
-          >
+          <button type="button" onClick={close} disabled={loading} className="btn btn--ghost">
             {t('cancel')}
           </button>
-          <button
-            type="submit"
-            disabled={!url.trim() || loading}
-            className="btn btn--primary"
-          >
+          <button type="submit" disabled={!url.trim() || loading} className="btn btn--primary">
             {loading && <Loader2 size={15} className="animate-spin" />}
             {loading ? t('adding') : t('addFeed')}
           </button>
         </div>
-        <p className="text-xs leading-5 text-faint">
-          {t('feedFormatHint')}
-        </p>
+        <p className="text-xs leading-5 text-faint">{t('feedFormatHint')}</p>
       </form>
     </Modal>
   );

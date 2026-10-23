@@ -40,7 +40,8 @@ class ReaderDB extends Dexie {
       // IndexedDB schema + indexes for feedId / time / flags
       feeds: '&id, folderId, url, updatedAt, createdAt',
       folders: '&id, createdAt',
-      articles: '&id, feedId, publishedAt, isRead, isStarred, isReadLater, createdAt, [feedId+publishedAt], [feedId+isRead]',
+      articles:
+        '&id, feedId, publishedAt, isRead, isStarred, isReadLater, createdAt, [feedId+publishedAt], [feedId+isRead]',
     });
     // v4: flag fields normalized to 0/1 so the flag indexes are actually
     // populated (see toWire). One-time pass over existing rows; the upgrade
@@ -49,7 +50,8 @@ class ReaderDB extends Dexie {
       .stores({
         feeds: '&id, folderId, url, updatedAt, createdAt',
         folders: '&id, createdAt',
-        articles: '&id, feedId, publishedAt, isRead, isStarred, isReadLater, createdAt, [feedId+publishedAt], [feedId+isRead]',
+        articles:
+          '&id, feedId, publishedAt, isRead, isStarred, isReadLater, createdAt, [feedId+publishedAt], [feedId+isRead]',
       })
       .upgrade(async (tx) => {
         await tx
@@ -208,11 +210,17 @@ export const ArticleRepository = {
         .where('[feedId+publishedAt]')
         .between([filter.feedId, Dexie.minKey], [filter.feedId, Dexie.maxKey]);
     } else if (filter.view === 'unread') {
-      collection = db.articles.where('[isRead+publishedAt]').between([FLAG_OFF, Dexie.minKey], [FLAG_OFF, Dexie.maxKey]);
+      collection = db.articles
+        .where('[isRead+publishedAt]')
+        .between([FLAG_OFF, Dexie.minKey], [FLAG_OFF, Dexie.maxKey]);
     } else if (filter.view === 'starred') {
-      collection = db.articles.where('[isStarred+publishedAt]').between([FLAG_ON, Dexie.minKey], [FLAG_ON, Dexie.maxKey]);
+      collection = db.articles
+        .where('[isStarred+publishedAt]')
+        .between([FLAG_ON, Dexie.minKey], [FLAG_ON, Dexie.maxKey]);
     } else if (filter.view === 'read-later') {
-      collection = db.articles.where('[isReadLater+publishedAt]').between([FLAG_ON, Dexie.minKey], [FLAG_ON, Dexie.maxKey]);
+      collection = db.articles
+        .where('[isReadLater+publishedAt]')
+        .between([FLAG_ON, Dexie.minKey], [FLAG_ON, Dexie.maxKey]);
     } else {
       collection = db.articles.orderBy('publishedAt');
     }
@@ -244,10 +252,7 @@ export const ArticleRepository = {
 
   async countUnread(feedId?: string): Promise<number> {
     if (feedId) {
-      return db.articles
-        .where('[feedId+isRead]')
-        .equals([feedId, FLAG_OFF])
-        .count();
+      return db.articles.where('[feedId+isRead]').equals([feedId, FLAG_OFF]).count();
     }
     return db.articles.where('isRead').equals(FLAG_OFF).count();
   },
@@ -257,11 +262,17 @@ export const ArticleRepository = {
   },
 
   async bulkUpdate(ids: string[], patch: Partial<Article>): Promise<void> {
-    await db.articles.where('id').anyOf(ids).modify(toWirePatch(patch) as unknown as Partial<Article>);
+    await db.articles
+      .where('id')
+      .anyOf(ids)
+      .modify(toWirePatch(patch) as unknown as Partial<Article>);
   },
 
   async markFeedRead(feedId: string): Promise<void> {
-    await db.articles.where('feedId').equals(feedId).modify({ isRead: FLAG_ON } as unknown as Partial<Article>);
+    await db.articles
+      .where('feedId')
+      .equals(feedId)
+      .modify({ isRead: FLAG_ON } as unknown as Partial<Article>);
   },
 
   async markAllRead(): Promise<void> {

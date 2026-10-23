@@ -39,11 +39,7 @@ export function SettingsPage() {
     <div className="h-full overflow-y-auto overscroll-contain bg-canvas">
       <div className="mx-auto max-w-2xl px-5 py-6 sm:px-6">
         <div className="mb-6 flex items-center gap-2">
-          <button
-            onClick={() => navigate(-1)}
-            aria-label={t('back')}
-            className="icon-btn lg:hidden"
-          >
+          <button onClick={() => navigate(-1)} aria-label={t('back')} className="icon-btn lg:hidden">
             <ArrowLeft size={18} />
           </button>
           <h1 className="font-display text-[28px] font-medium tracking-tight text-ink">{t('settings')}</h1>
@@ -55,7 +51,10 @@ export function SettingsPage() {
           </Row>
           <Row label={t('language')}>
             <Seg
-              options={[{ value: 'zh' as Language, label: '中文' }, { value: 'en' as Language, label: 'English' }]}
+              options={[
+                { value: 'zh' as Language, label: '中文' },
+                { value: 'en' as Language, label: 'English' },
+              ]}
               value={settings.language}
               onChange={(v: Language) => settings.set({ language: v })}
             />
@@ -97,7 +96,19 @@ export function SettingsPage() {
               options={(['manual', '15m', '30m', '1h', '6h', '12h', '24h'] as RefreshInterval[]).map((v) => ({
                 value: v,
                 label:
-                  v === 'manual' ? t('manual') : v === '15m' ? '15 min' : v === '30m' ? '30 min' : v === '1h' ? '1 hour' : v === '6h' ? '6 hours' : v === '12h' ? '12 hours' : '24 hours',
+                  v === 'manual'
+                    ? t('manual')
+                    : v === '15m'
+                      ? '15 min'
+                      : v === '30m'
+                        ? '30 min'
+                        : v === '1h'
+                          ? '1 hour'
+                          : v === '6h'
+                            ? '6 hours'
+                            : v === '12h'
+                              ? '12 hours'
+                              : '24 hours',
               }))}
               value={settings.refreshInterval}
               onChange={(v: RefreshInterval) => settings.set({ refreshInterval: v })}
@@ -107,10 +118,7 @@ export function SettingsPage() {
 
         <Section title={t('data')}>
           <div className="flex flex-wrap gap-2">
-            <button
-              onClick={() => fileRef.current?.click()}
-              className="btn btn--secondary"
-            >
+            <button onClick={() => fileRef.current?.click()} className="btn btn--secondary">
               <Upload size={15} /> {t('importOpml')}
             </button>
             <button
@@ -148,9 +156,7 @@ export function SettingsPage() {
           />
         </Section>
 
-        <p className="mt-8 text-center text-xs text-faint">
-          EasyRSS · Local-first · IndexedDB + localStorage · v1.0.0
-        </p>
+        <p className="mt-8 text-center text-xs text-faint">EasyRSS · Local-first · IndexedDB + localStorage · v1.0.0</p>
       </div>
     </div>
   );
@@ -174,7 +180,15 @@ function Row({ label, children }: { label: string; children: React.ReactNode }) 
   );
 }
 
-function Seg<T extends string>({ options, value, onChange }: { options: Array<{ value: T; label: string }>; value: T; onChange: (v: T) => void }) {
+function Seg<T extends string>({
+  options,
+  value,
+  onChange,
+}: {
+  options: Array<{ value: T; label: string }>;
+  value: T;
+  onChange: (v: T) => void;
+}) {
   return (
     <div className="seg" role="radiogroup">
       {options.map((o) => (
@@ -193,13 +207,5 @@ function Seg<T extends string>({ options, value, onChange }: { options: Array<{ 
 }
 
 function Toggle({ on, onChange }: { on: boolean; onChange: () => void }) {
-  return (
-    <button
-      role="switch"
-      aria-checked={on}
-      onClick={onChange}
-      aria-label="toggle"
-      className="switch"
-    />
-  );
+  return <button role="switch" aria-checked={on} onClick={onChange} aria-label="toggle" className="switch" />;
 }

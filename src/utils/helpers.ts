@@ -85,10 +85,5 @@ export function faviconFor(siteUrl?: string): string | undefined {
 export function isEditableTarget(el: EventTarget | null): boolean {
   if (!(el instanceof HTMLElement)) return false;
   const tag = el.tagName.toLowerCase();
-  return (
-    tag === 'input' ||
-    tag === 'textarea' ||
-    tag === 'select' ||
-    el.isContentEditable
-  );
+  return tag === 'input' || tag === 'textarea' || tag === 'select' || el.isContentEditable;
 }

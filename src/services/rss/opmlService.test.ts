@@ -1,7 +1,8 @@
 import { describe, expect, it } from 'vitest';
 import { parseOpml } from './opmlService';
 
-const wrap = (body: string) => `<?xml version="1.0"?><opml version="2.0"><head><title>t</title></head><body>${body}</body></opml>`;
+const wrap = (body: string) =>
+  `<?xml version="1.0"?><opml version="2.0"><head><title>t</title></head><body>${body}</body></opml>`;
 
 describe('parseOpml', () => {
   it('parses folders and flat feeds', () => {

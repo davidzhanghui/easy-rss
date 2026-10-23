@@ -5,14 +5,7 @@ import { FetchError, fetchFeedXml, type FetchAttempt } from './fetcher';
 import { articleIdFor, normalizeUrl, parseFeedXml } from './parser';
 
 export type AddFeedErrorCode =
-  | 'fetch'
-  | 'parse'
-  | 'network'
-  | 'cors'
-  | 'timeout'
-  | 'duplicate'
-  | 'rateLimited'
-  | 'tooLarge';
+  'fetch' | 'parse' | 'network' | 'cors' | 'timeout' | 'duplicate' | 'rateLimited' | 'tooLarge';
 
 /** Parallel refresh workers for refreshAll(). */
 const REFRESH_CONCURRENCY = 3;
@@ -88,7 +81,10 @@ export const FeedService = {
       lastFetchedAt: now,
     };
     await FeedRepository.put(feed);
-    const articles = toArticles(id, parsed.articles.map((a) => ({ ...a })));
+    const articles = toArticles(
+      id,
+      parsed.articles.map((a) => ({ ...a })),
+    );
     const added = await ArticleRepository.bulkUpsert(articles);
     return { feed, added };
   },
@@ -157,7 +153,16 @@ export const FeedService = {
 
 function toArticles(
   feedId: string,
-  parsed: Array<{ guid: string; title: string; url: string; author?: string; content?: string; contentSnippet?: string; publishedAt?: number; image?: string }>,
+  parsed: Array<{
+    guid: string;
+    title: string;
+    url: string;
+    author?: string;
+    content?: string;
+    contentSnippet?: string;
+    publishedAt?: number;
+    image?: string;
+  }>,
   isDemo?: boolean,
 ): Article[] {
   const now = Date.now();

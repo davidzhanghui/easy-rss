@@ -30,11 +30,7 @@ import { cn, uid } from '../utils/helpers';
 
 function Count({ n }: { n: number }) {
   if (n <= 0) return null;
-  return (
-    <span className="badge badge--count ml-auto pl-2">
-      {n > 999 ? '999+' : n}
-    </span>
-  );
+  return <span className="badge badge--count ml-auto pl-2">{n > 999 ? '999+' : n}</span>;
 }
 
 export function Sidebar({ onNavigate }: { onNavigate?: () => void }) {
@@ -77,11 +73,7 @@ export function Sidebar({ onNavigate }: { onNavigate?: () => void }) {
   const allCollapsed = folders.length > 0 && folders.every((f) => collapsed.has(f.id));
 
   const smartLink = (to: string, icon: React.ReactNode, label: string, n: number) => (
-    <NavLink
-      to={to}
-      onClick={onNavigate}
-      className={({ isActive }) => cn('nav-item', isActive && 'is-active')}
-    >
+    <NavLink to={to} onClick={onNavigate} className={({ isActive }) => cn('nav-item', isActive && 'is-active')}>
       {icon}
       <span className="truncate">{label}</span>
       <Count n={n} />
@@ -141,9 +133,7 @@ export function Sidebar({ onNavigate }: { onNavigate?: () => void }) {
         <div className="flex items-center">
           {folders.length > 0 && (
             <button
-              onClick={() =>
-                setCollapsed(allCollapsed ? new Set() : new Set(folders.map((f) => f.id)))
-              }
+              onClick={() => setCollapsed(allCollapsed ? new Set() : new Set(folders.map((f) => f.id)))}
               aria-label={allCollapsed ? t('expandAll') : t('collapseAll')}
               title={allCollapsed ? t('expandAll') : t('collapseAll')}
               className="icon-btn"
@@ -197,8 +187,25 @@ export function Sidebar({ onNavigate }: { onNavigate?: () => void }) {
               </div>
               {menuFolderId === folder.id && (
                 <div className="animate-fade-in ml-6 flex gap-1 pb-1">
-                  <button onClick={() => { setRenameFolderId(folder.id); setMenuFolderId(null); }} className="btn btn--ghost btn--sm text-xs">{t('rename')}</button>
-                  <button onClick={() => { setDeleteFolderId(folder.id); setMenuFolderId(null); }} className="btn btn--ghost btn--sm text-xs text-clay hover:text-clay"><Trash2 size={12} />{t('delete')}</button>
+                  <button
+                    onClick={() => {
+                      setRenameFolderId(folder.id);
+                      setMenuFolderId(null);
+                    }}
+                    className="btn btn--ghost btn--sm text-xs"
+                  >
+                    {t('rename')}
+                  </button>
+                  <button
+                    onClick={() => {
+                      setDeleteFolderId(folder.id);
+                      setMenuFolderId(null);
+                    }}
+                    className="btn btn--ghost btn--sm text-xs text-clay hover:text-clay"
+                  >
+                    <Trash2 size={12} />
+                    {t('delete')}
+                  </button>
                 </div>
               )}
               {!isCollapsed &&
@@ -253,32 +260,34 @@ export function Sidebar({ onNavigate }: { onNavigate?: () => void }) {
         <FeedMenu
           folders={folders.map((f) => ({ id: f.id, name: f.name }))}
           onClose={() => setMenuFeedId(null)}
-          onRename={() => { setRenameFeedId(menuFeedId); setMenuFeedId(null); }}
-          onMove={(folderId) => { void FeedService.moveFeed(menuFeedId, folderId).then(() => { invalidate('feeds'); setMenuFeedId(null); }); }}
-          onDelete={() => { setDeleteFeedId(menuFeedId); setMenuFeedId(null); }}
+          onRename={() => {
+            setRenameFeedId(menuFeedId);
+            setMenuFeedId(null);
+          }}
+          onMove={(folderId) => {
+            void FeedService.moveFeed(menuFeedId, folderId).then(() => {
+              invalidate('feeds');
+              setMenuFeedId(null);
+            });
+          }}
+          onDelete={() => {
+            setDeleteFeedId(menuFeedId);
+            setMenuFeedId(null);
+          }}
         />
       )}
 
       <div className="mt-auto flex flex-col gap-1 border-t border-hairsoft pt-3">
         <div className="flex gap-1">
-          <button
-            onClick={() => fileRef.current?.click()}
-            className="btn btn--secondary btn--sm flex-1 text-xs"
-          >
+          <button onClick={() => fileRef.current?.click()} className="btn btn--secondary btn--sm flex-1 text-xs">
             <Upload size={14} /> {t('importOpml')}
           </button>
-          <button
-            onClick={doExport}
-            className="btn btn--secondary btn--sm flex-1 text-xs"
-          >
+          <button onClick={doExport} className="btn btn--secondary btn--sm flex-1 text-xs">
             <Download size={14} /> {t('exportOpml')}
           </button>
         </div>
         {counts?.hasDemo && (
-          <button
-            onClick={clearDemo}
-            className="btn btn--ghost btn--sm w-full text-xs"
-          >
+          <button onClick={clearDemo} className="btn btn--ghost btn--sm w-full text-xs">
             {t('clearDemo')}
           </button>
         )}
@@ -359,7 +368,15 @@ export function Sidebar({ onNavigate }: { onNavigate?: () => void }) {
 }
 
 function FeedRow({
-  feedId, title, icon, unread, isDemo, menuOpen, onMenu, onNavigate, demoBadge,
+  feedId,
+  title,
+  icon,
+  unread,
+  isDemo,
+  menuOpen,
+  onMenu,
+  onNavigate,
+  demoBadge,
 }: {
   feedId: string;
   title: string;
@@ -378,27 +395,15 @@ function FeedRow({
       <NavLink
         to={`/feed/${feedId}`}
         onClick={onNavigate}
-        className={({ isActive }) =>
-          cn('nav-item min-w-0 flex-1 !text-[13px]', isActive && 'is-active')
-        }
+        className={({ isActive }) => cn('nav-item min-w-0 flex-1 !text-[13px]', isActive && 'is-active')}
       >
         {icon && iconOk ? (
-          <img
-            src={icon}
-            alt=""
-            loading="lazy"
-            onError={() => setIconOk(false)}
-            className="h-4 w-4 shrink-0 rounded"
-          />
+          <img src={icon} alt="" loading="lazy" onError={() => setIconOk(false)} className="h-4 w-4 shrink-0 rounded" />
         ) : (
           <Rss size={14} className="shrink-0 text-faint" />
         )}
         <span className="truncate">{title}</span>
-        {isDemo && (
-          <span className="badge badge--status shrink-0">
-            {demoBadge}
-          </span>
-        )}
+        {isDemo && <span className="badge badge--status shrink-0">{demoBadge}</span>}
         <Count n={unread} />
       </NavLink>
       <button
@@ -414,7 +419,11 @@ function FeedRow({
 }
 
 function FeedMenu({
-  folders, onClose, onRename, onMove, onDelete,
+  folders,
+  onClose,
+  onRename,
+  onMove,
+  onDelete,
 }: {
   folders: Array<{ id: string; name: string }>;
   onClose: () => void;
@@ -425,9 +434,13 @@ function FeedMenu({
   const t = useT();
   return (
     <div className="popover animate-fade-in ml-8 p-1.5" role="menu">
-      <button onClick={onRename} className="pop-item">{t('rename')}</button>
+      <button onClick={onRename} className="pop-item">
+        {t('rename')}
+      </button>
       <div className="px-3 pb-1 pt-2 text-[11px] font-medium uppercase tracking-[1.5px] text-faint">{t('moveTo')}</div>
-      <button onClick={() => onMove(undefined)} className="pop-item">{t('noFolder')}</button>
+      <button onClick={() => onMove(undefined)} className="pop-item">
+        {t('noFolder')}
+      </button>
       {folders.map((f) => (
         <button key={f.id} onClick={() => onMove(f.id)} className="pop-item truncate">
           {f.name}
@@ -437,7 +450,9 @@ function FeedMenu({
       <button onClick={onDelete} className="pop-item text-clay">
         <Trash2 size={13} /> {t('delete')}
       </button>
-      <button onClick={onClose} className="pop-item mt-1 justify-center text-xs text-faint">{t('cancel')}</button>
+      <button onClick={onClose} className="pop-item mt-1 justify-center text-xs text-faint">
+        {t('cancel')}
+      </button>
     </div>
   );
 }

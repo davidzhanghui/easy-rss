@@ -20,12 +20,17 @@ describe('safeHttpUrl', () => {
     expect(safeHttpUrl('http://example.com')).toBe('http://example.com/');
   });
 
-  it.each(['javascript:alert(1)', 'JaVaScRiPt:alert(1)', 'data:text/html,<script>', 'file:///etc/passwd', '/relative', '', 'not a url'])(
-    'rejects %s',
-    (raw) => {
-      expect(safeHttpUrl(raw)).toBe('');
-    },
-  );
+  it.each([
+    'javascript:alert(1)',
+    'JaVaScRiPt:alert(1)',
+    'data:text/html,<script>',
+    'file:///etc/passwd',
+    '/relative',
+    '',
+    'not a url',
+  ])('rejects %s', (raw) => {
+    expect(safeHttpUrl(raw)).toBe('');
+  });
 
   it('handles null/undefined', () => {
     expect(safeHttpUrl(undefined)).toBe('');

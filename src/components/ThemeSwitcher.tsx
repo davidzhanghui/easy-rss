@@ -67,9 +67,7 @@ export function ThemeSwitcher() {
 
   const group = (label: string, list: typeof LIGHT_THEMES) => (
     <>
-      <div className="px-2.5 pb-1 pt-2.5 text-[11px] font-medium uppercase tracking-[1.5px] text-faint">
-        {label}
-      </div>
+      <div className="px-2.5 pb-1 pt-2.5 text-[11px] font-medium uppercase tracking-[1.5px] text-faint">{label}</div>
       {list.map((m) => (
         <button
           key={m.id}
@@ -97,9 +95,7 @@ export function ThemeSwitcher() {
         className="btn btn--secondary"
       >
         <Swatch bg={resolvedMeta.bg} accent={resolvedMeta.accent} />
-        <span className="hidden md:inline">
-          {theme === 'auto' ? t('themeAuto') : nameOf(resolved)}
-        </span>
+        <span className="hidden md:inline">{theme === 'auto' ? t('themeAuto') : nameOf(resolved)}</span>
         <ChevronDown size={13} className={cn('transition-transform', open && 'rotate-180')} />
       </button>
 
@@ -123,12 +119,10 @@ export function ThemeSwitcher() {
 
           {theme === 'auto' && (
             <div className="mt-1 grid grid-cols-2 gap-2 rounded-lg bg-parchment p-2">
-              {(
-                [
-                  { slot: 'autoLight' as const, label: t('themeWhenLight'), list: LIGHT_THEMES, value: autoLight },
-                  { slot: 'autoDark' as const, label: t('themeWhenDark'), list: DARK_THEMES, value: autoDark },
-                ]
-              ).map(({ slot, label, list, value }) => (
+              {[
+                { slot: 'autoLight' as const, label: t('themeWhenLight'), list: LIGHT_THEMES, value: autoLight },
+                { slot: 'autoDark' as const, label: t('themeWhenDark'), list: DARK_THEMES, value: autoDark },
+              ].map(({ slot, label, list, value }) => (
                 <label key={slot} className="flex flex-col gap-1 text-[11px] font-medium text-muted">
                   {label}
                   <select

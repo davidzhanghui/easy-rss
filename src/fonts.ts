@@ -1,0 +1,40 @@
+// Self-hosted web fonts (bundled by Vite, no third-party requests).
+// Only the weights/subsets the themes actually use are imported; Latin fonts
+// ship the latin subset, CJK fonts ship unicode-range slices loaded on demand.
+import '@fontsource/eb-garamond/latin-400.css';
+import '@fontsource/eb-garamond/latin-500.css';
+import '@fontsource/eb-garamond/latin-600.css';
+import '@fontsource/eb-garamond/latin-400-italic.css';
+import '@fontsource/cormorant-garamond/latin-400.css';
+import '@fontsource/cormorant-garamond/latin-500.css';
+import '@fontsource/cormorant-garamond/latin-600.css';
+import '@fontsource/cormorant-garamond/latin-400-italic.css';
+import '@fontsource/spectral/latin-300.css';
+import '@fontsource/spectral/latin-400.css';
+import '@fontsource/spectral/latin-500.css';
+import '@fontsource/spectral/latin-400-italic.css';
+import '@fontsource/lora/latin-400.css';
+import '@fontsource/lora/latin-500.css';
+import '@fontsource/lora/latin-400-italic.css';
+import '@fontsource/crimson-pro/latin-400.css';
+import '@fontsource/crimson-pro/latin-500.css';
+import '@fontsource/crimson-pro/latin-400-italic.css';
+import '@fontsource/literata/latin-400.css';
+import '@fontsource/literata/latin-500.css';
+import '@fontsource/literata/latin-400-italic.css';
+import '@fontsource/inter/latin-400.css';
+import '@fontsource/inter/latin-500.css';
+import '@fontsource/inter/latin-600.css';
+import '@fontsource/jetbrains-mono/latin-400.css';
+import '@fontsource/jetbrains-mono/latin-500.css';
+import '@fontsource/zcool-xiaowei/400.css';
+import '@fontsource/noto-sans-sc/latin-400.css';
+import '@fontsource/noto-sans-sc/latin-500.css';
+import '@fontsource/noto-sans-sc/latin-600.css';
+import '@fontsource/noto-sans-sc/chinese-simplified-400.css';
+import '@fontsource/noto-sans-sc/chinese-simplified-500.css';
+import '@fontsource/noto-sans-sc/chinese-simplified-600.css';
+import '@fontsource/noto-serif-sc/latin-400.css';
+import '@fontsource/noto-serif-sc/latin-500.css';
+import '@fontsource/noto-serif-sc/chinese-simplified-400.css';
+import '@fontsource/noto-serif-sc/chinese-simplified-500.css';

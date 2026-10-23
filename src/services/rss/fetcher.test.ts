@@ -24,14 +24,13 @@ describe('fetchFeedXml', () => {
   });
 
   it('falls back to the custom proxy with an encoded target URL', async () => {
-    const f = vi
-      .fn()
-      .mockRejectedValueOnce(new TypeError('Failed to fetch'))
-      .mockResolvedValueOnce(ok(XML));
+    const f = vi.fn().mockRejectedValueOnce(new TypeError('Failed to fetch')).mockResolvedValueOnce(ok(XML));
     vi.stubGlobal('fetch', f);
     const r = await fetchFeedXml('https://example.com/feed?a=1&b=2');
     expect(r.viaProxy).toBe('custom');
-    expect(f.mock.calls[1][0]).toBe(`https://proxy.test/?url=${encodeURIComponent('https://example.com/feed?a=1&b=2')}`);
+    expect(f.mock.calls[1][0]).toBe(
+      `https://proxy.test/?url=${encodeURIComponent('https://example.com/feed?a=1&b=2')}`,
+    );
   });
 
   it('opens the circuit breaker after an unreachable proxy', async () => {

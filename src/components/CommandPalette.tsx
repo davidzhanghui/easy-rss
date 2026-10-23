@@ -30,7 +30,7 @@ export function CommandPalette() {
       return () => window.clearTimeout(timer);
     }
     return undefined;
-  }, [open ]);
+  }, [open]);
 
   const { data } = useQuery({
     queryKey: ['cmd-articles', q],
@@ -42,17 +42,82 @@ export function CommandPalette() {
 
   const commands = useMemo(() => {
     const all = [
-      { id: 'add', icon: <Plus size={16} />, label: t('addFeed'), run: () => { close(); setUI({ addFeedOpen: true }); } },
-      { id: 'refresh', icon: <RefreshCw size={16} />, label: t('refreshAll'), run: () => { close(); void FeedService.refreshAll().then(() => { invalidate('feeds', 'counts', 'articles'); toast(t('toastRefreshed')); }); } },
-      { id: 'all', icon: <LayoutGrid size={16} />, label: t('goAll'), run: () => { close(); navigate('/'); } },
-      { id: 'unread', icon: <Inbox size={16} />, label: t('goUnread'), run: () => { close(); navigate('/unread'); } },
-      { id: 'starred', icon: <Star size={16} />, label: t('goStarred'), run: () => { close(); navigate('/starred'); } },
-      { id: 'later', icon: <Clock3 size={16} />, label: t('readLater'), run: () => { close(); navigate('/read-later'); } },
       {
-        id: 'theme', icon: <Moon size={16} />, label: t('toggleDayNight'),
-        run: () => { close(); useSettingsStore.getState().cycleTheme(); applyThemeFromStore(); },
+        id: 'add',
+        icon: <Plus size={16} />,
+        label: t('addFeed'),
+        run: () => {
+          close();
+          setUI({ addFeedOpen: true });
+        },
       },
-      { id: 'settings', icon: <Settings size={16} />, label: t('settings'), run: () => { close(); navigate('/settings'); } },
+      {
+        id: 'refresh',
+        icon: <RefreshCw size={16} />,
+        label: t('refreshAll'),
+        run: () => {
+          close();
+          void FeedService.refreshAll().then(() => {
+            invalidate('feeds', 'counts', 'articles');
+            toast(t('toastRefreshed'));
+          });
+        },
+      },
+      {
+        id: 'all',
+        icon: <LayoutGrid size={16} />,
+        label: t('goAll'),
+        run: () => {
+          close();
+          navigate('/');
+        },
+      },
+      {
+        id: 'unread',
+        icon: <Inbox size={16} />,
+        label: t('goUnread'),
+        run: () => {
+          close();
+          navigate('/unread');
+        },
+      },
+      {
+        id: 'starred',
+        icon: <Star size={16} />,
+        label: t('goStarred'),
+        run: () => {
+          close();
+          navigate('/starred');
+        },
+      },
+      {
+        id: 'later',
+        icon: <Clock3 size={16} />,
+        label: t('readLater'),
+        run: () => {
+          close();
+          navigate('/read-later');
+        },
+      },
+      {
+        id: 'theme',
+        icon: <Moon size={16} />,
+        label: t('toggleDayNight'),
+        run: () => {
+          close();
+          useSettingsStore.getState().cycleTheme();
+          applyThemeFromStore();
+        },
+      },
+      {
+        id: 'settings',
+        icon: <Settings size={16} />,
+        label: t('settings'),
+        run: () => {
+          close();
+          navigate('/settings');
+        },
+      },
     ];
     const needle = q.trim().toLowerCase();
     if (!needle) return all;
@@ -95,8 +160,18 @@ export function CommandPalette() {
 
   if (!open) return null;
   return (
-    <div className="scrim animate-fade-in fixed inset-0 z-50 flex items-start justify-center px-4 pt-[12vh]" onMouseDown={(e) => { if (e.target === e.currentTarget) close(); }}>
-      <div role="dialog" aria-modal="true" aria-label={t('cmdPalette')} className="animate-pop w-full max-w-lg overflow-hidden rounded-xl border border-hairline bg-card shadow-[0_24px_60px_rgba(var(--shadow-rgb),0.25)]">
+    <div
+      className="scrim animate-fade-in fixed inset-0 z-50 flex items-start justify-center px-4 pt-[12vh]"
+      onMouseDown={(e) => {
+        if (e.target === e.currentTarget) close();
+      }}
+    >
+      <div
+        role="dialog"
+        aria-modal="true"
+        aria-label={t('cmdPalette')}
+        className="animate-pop w-full max-w-lg overflow-hidden rounded-xl border border-hairline bg-card shadow-[0_24px_60px_rgba(var(--shadow-rgb),0.25)]"
+      >
         <div className="flex items-center gap-2 border-b border-hairsoft px-4">
           <Search size={17} className="text-faint" />
           <input
@@ -104,9 +179,18 @@ export function CommandPalette() {
             value={q}
             onChange={(e) => setQ(e.target.value)}
             onKeyDown={(e) => {
-              if (e.key === 'ArrowDown') { e.preventDefault(); setActive((a) => Math.min(rows.length - 1, a + 1)); }
-              if (e.key === 'ArrowUp') { e.preventDefault(); setActive((a) => Math.max(0, a - 1)); }
-              if (e.key === 'Enter' && rows[active]) { e.preventDefault(); rows[active].run(); }
+              if (e.key === 'ArrowDown') {
+                e.preventDefault();
+                setActive((a) => Math.min(rows.length - 1, a + 1));
+              }
+              if (e.key === 'ArrowUp') {
+                e.preventDefault();
+                setActive((a) => Math.max(0, a - 1));
+              }
+              if (e.key === 'Enter' && rows[active]) {
+                e.preventDefault();
+                rows[active].run();
+              }
               if (e.key === 'Escape') close();
             }}
             placeholder={t('cmdHint')}

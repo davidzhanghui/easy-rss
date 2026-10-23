@@ -27,9 +27,7 @@ export function Modal({ open, onClose, title, children, wide }: ModalProps) {
     const panel = panelRef.current;
     // Focus first focusable element
     const t = window.setTimeout(() => {
-      const el = panel?.querySelector<HTMLElement>(
-        'input, select, textarea, button:not([data-close])',
-      );
+      const el = panel?.querySelector<HTMLElement>('input, select, textarea, button:not([data-close])');
       (el ?? panel)?.focus();
     }, 30);
     const onKey = (e: KeyboardEvent) => {
@@ -65,7 +63,12 @@ export function Modal({ open, onClose, title, children, wide }: ModalProps) {
 
   if (!open) return null;
   return (
-    <div className="scrim animate-fade-in fixed inset-0 z-50 flex items-end justify-center p-0 backdrop-blur-[2px] sm:items-center sm:p-4" onMouseDown={(e) => { if (e.target === e.currentTarget) onClose(); }}>
+    <div
+      className="scrim animate-fade-in fixed inset-0 z-50 flex items-end justify-center p-0 backdrop-blur-[2px] sm:items-center sm:p-4"
+      onMouseDown={(e) => {
+        if (e.target === e.currentTarget) onClose();
+      }}
+    >
       <div
         ref={panelRef}
         role="dialog"
@@ -79,12 +82,7 @@ export function Modal({ open, onClose, title, children, wide }: ModalProps) {
       >
         <div className="mb-4 flex items-center justify-between">
           <h2 className="font-display text-[22px] font-medium tracking-tight text-ink">{title}</h2>
-          <button
-            data-close
-            onClick={onClose}
-            aria-label="Close dialog"
-            className="icon-btn"
-          >
+          <button data-close onClick={onClose} aria-label="Close dialog" className="icon-btn">
             <X size={18} />
           </button>
         </div>

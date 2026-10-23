@@ -21,7 +21,6 @@ export function useAutoRefresh(onDone?: (added: number) => void): void {
   useEffect(() => {
     if (interval === 'manual') return;
     const mins = MINUTES[interval] ?? 60;
-    let timer: number | undefined;
 
     const refresh = async () => {
       if (document.visibilityState !== 'visible') return;
@@ -40,7 +39,7 @@ export function useAutoRefresh(onDone?: (added: number) => void): void {
       }
     };
 
-    timer = window.setInterval(refresh, mins * 60 * 1000);
+    const timer = window.setInterval(refresh, mins * 60 * 1000);
 
     const onVisible = () => {
       if (document.visibilityState !== 'visible') return;

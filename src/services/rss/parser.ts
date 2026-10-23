@@ -124,39 +124,43 @@ function parseRss2(doc: Document): ParsedFeed {
   const icon = feedIcon(doc, siteUrl);
 
   const items = Array.from(doc.getElementsByTagName('item'));
-  const articles: ParsedArticle[] = items.map((item, idx) => {
-    const titleEl = childText(item, 'title') || 'Untitled';
-    const link = childText(item, 'link') || attrOf(item, 'link', 'href') || '';
-    const guid = childText(item, 'guid') || link || `${titleEl}-${idx}`;
-    // content:encoded > content > description
-    const contentEncoded = Array.from(item.getElementsByTagName('encoded'))[0]?.textContent?.trim();
-    const contentNs = Array.from(item.childNodes).find(
-      (n) => n instanceof Element && n.tagName.toLowerCase().includes('content'),
-    ) as Element | undefined;
-    const descriptionText = childText(item, 'description');
-    const content = contentEncoded || contentNs?.textContent?.trim() || descriptionText;
-    const author =
-      childText(item, 'dc:creator') ||
-      childText(item, 'creator') ||
-      childText(item, 'author') ||
-      undefined;
-    const pubRaw = childText(item, 'pubDate') || childText(item, 'dc:date') || childText(item, 'date');
-    const enclosure = attrOf(item, 'enclosure', 'url');
-    const mediaContent = attrOf(item, 'media:content', 'url') || attrOf(item, 'content', 'url');
-    const mediaThumb = attrOf(item, 'media:thumbnail', 'url');
-    const image = mediaContent || mediaThumb || (enclosure && /\.(png|jpe?g|gif|webp|avif)(\?|$)/i.test(enclosure) ? enclosure : undefined) || firstImageFromHtml(content) || firstImageFromHtml(descriptionText);
-    const url = safeHttpUrl(link) || safeHttpUrl(guid);
-    return {
-      guid,
-      title: titleEl,
-      url,
-      author,
-      content,
-      contentSnippet: snippetOf(content, descriptionText),
-      publishedAt: parseDate(pubRaw),
-      image,
-    };
-  }).map((a) => ({ ...a, guid: a.guid || a.url }));
+  const articles: ParsedArticle[] = items
+    .map((item, idx) => {
+      const titleEl = childText(item, 'title') || 'Untitled';
+      const link = childText(item, 'link') || attrOf(item, 'link', 'href') || '';
+      const guid = childText(item, 'guid') || link || `${titleEl}-${idx}`;
+      // content:encoded > content > description
+      const contentEncoded = Array.from(item.getElementsByTagName('encoded'))[0]?.textContent?.trim();
+      const contentNs = Array.from(item.childNodes).find(
+        (n) => n instanceof Element && n.tagName.toLowerCase().includes('content'),
+      ) as Element | undefined;
+      const descriptionText = childText(item, 'description');
+      const content = contentEncoded || contentNs?.textContent?.trim() || descriptionText;
+      const author =
+        childText(item, 'dc:creator') || childText(item, 'creator') || childText(item, 'author') || undefined;
+      const pubRaw = childText(item, 'pubDate') || childText(item, 'dc:date') || childText(item, 'date');
+      const enclosure = attrOf(item, 'enclosure', 'url');
+      const mediaContent = attrOf(item, 'media:content', 'url') || attrOf(item, 'content', 'url');
+      const mediaThumb = attrOf(item, 'media:thumbnail', 'url');
+      const image =
+        mediaContent ||
+        mediaThumb ||
+        (enclosure && /\.(png|jpe?g|gif|webp|avif)(\?|$)/i.test(enclosure) ? enclosure : undefined) ||
+        firstImageFromHtml(content) ||
+        firstImageFromHtml(descriptionText);
+      const url = safeHttpUrl(link) || safeHttpUrl(guid);
+      return {
+        guid,
+        title: titleEl,
+        url,
+        author,
+        content,
+        contentSnippet: snippetOf(content, descriptionText),
+        publishedAt: parseDate(pubRaw),
+        image,
+      };
+    })
+    .map((a) => ({ ...a, guid: a.guid || a.url }));
 
   return {
     title,
@@ -171,9 +175,24 @@ function parseAtom(doc: Document): ParsedFeed {
   const title = doc.getElementsByTagName('title')[0]?.textContent?.trim() || 'Untitled Feed';
   const subtitle = doc.getElementsByTagName('subtitle')[0]?.textContent?.trim();
   const topLinks = Array.from(doc.documentElement.children).filter((c) => c.tagName.toLowerCase() === 'link');
-  const siteUrl = topLinks.find((l) => (l.getAttribute('rel') || 'alternate') === 'alternate')?.getAttribute('href') ?? topLinks[0]?.getAttribute('href') ?? undefined;
-  const iconRaw = doc.getElementsByTagName('icon')[0]?.textContent?.trim() || doc.getElementsByTagName('logo')[0]?.textContent?.trim();
-  const icon = iconRaw || (siteUrl ? (() => { try { return `${new URL(siteUrl).origin}/favicon.ico`; } catch { return undefined; } })() : undefined);
+  const siteUrl =
+    topLinks.find((l) => (l.getAttribute('rel') || 'alternate') === 'alternate')?.getAttribute('href') ??
+    topLinks[0]?.getAttribute('href') ??
+    undefined;
+  const iconRaw =
+    doc.getElementsByTagName('icon')[0]?.textContent?.trim() ||
+    doc.getElementsByTagName('logo')[0]?.textContent?.trim();
+  const icon =
+    iconRaw ||
+    (siteUrl
+      ? (() => {
+          try {
+            return `${new URL(siteUrl).origin}/favicon.ico`;
+          } catch {
+            return undefined;
+          }
+        })()
+      : undefined);
 
   const entries = Array.from(doc.getElementsByTagName('entry'));
   const articles: ParsedArticle[] = entries.map((entry) => {
@@ -181,12 +200,16 @@ function parseAtom(doc: Document): ParsedFeed {
     const id = entry.getElementsByTagName('id')[0]?.textContent?.trim() || '';
     const url = atomLink(entry) || id;
     const authorEl = entry.getElementsByTagName('author')[0];
-    const author = authorEl?.getElementsByTagName('name')[0]?.textContent?.trim() || entry.getElementsByTagName('name')[0]?.textContent?.trim();
+    const author =
+      authorEl?.getElementsByTagName('name')[0]?.textContent?.trim() ||
+      entry.getElementsByTagName('name')[0]?.textContent?.trim();
     const contentEl = entry.getElementsByTagName('content')[0];
     const summaryEl = entry.getElementsByTagName('summary')[0];
     const content = contentEl?.textContent?.trim() || summaryEl?.textContent?.trim();
     const summary = summaryEl?.textContent?.trim();
-    const pubRaw = entry.getElementsByTagName('published')[0]?.textContent?.trim() || entry.getElementsByTagName('updated')[0]?.textContent?.trim();
+    const pubRaw =
+      entry.getElementsByTagName('published')[0]?.textContent?.trim() ||
+      entry.getElementsByTagName('updated')[0]?.textContent?.trim();
     const mediaUrl = (() => {
       for (const child of Array.from(entry.children)) {
         const t = child.tagName.toLowerCase();
@@ -224,9 +247,13 @@ function parseRdf(doc: Document): ParsedFeed {
   const articles: ParsedArticle[] = items.map((item) => {
     const t = item.getElementsByTagName('title')[0]?.textContent?.trim() || 'Untitled';
     const link = item.getElementsByTagName('link')[0]?.textContent?.trim() || '';
-    const author = item.getElementsByTagName('dc:creator')[0]?.textContent?.trim() || item.getElementsByTagName('creator')[0]?.textContent?.trim();
+    const author =
+      item.getElementsByTagName('dc:creator')[0]?.textContent?.trim() ||
+      item.getElementsByTagName('creator')[0]?.textContent?.trim();
     const desc = item.getElementsByTagName('description')[0]?.textContent?.trim();
-    const pubRaw = item.getElementsByTagName('dc:date')[0]?.textContent?.trim() || item.getElementsByTagName('date')[0]?.textContent?.trim();
+    const pubRaw =
+      item.getElementsByTagName('dc:date')[0]?.textContent?.trim() ||
+      item.getElementsByTagName('date')[0]?.textContent?.trim();
     const guid = link || t;
     return {
       guid,
@@ -239,7 +266,15 @@ function parseRdf(doc: Document): ParsedFeed {
       image: firstImageFromHtml(desc),
     };
   });
-  const icon = siteUrl ? (() => { try { return `${new URL(siteUrl).origin}/favicon.ico`; } catch { return undefined; } })() : undefined;
+  const icon = siteUrl
+    ? (() => {
+        try {
+          return `${new URL(siteUrl).origin}/favicon.ico`;
+        } catch {
+          return undefined;
+        }
+      })()
+    : undefined;
   return { title, description, siteUrl, icon, articles };
 }
 

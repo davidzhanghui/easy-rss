@@ -1,0 +1,11 @@
+dist
+node_modules
+.run
+package-lock.json
+public/sw.js
+docs
+*.md
+*.css
+*.html
+*.jsonc
+.github

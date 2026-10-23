@@ -31,13 +31,7 @@ export interface FetchProxy {
   fetchText(url: string, signal: AbortSignal): Promise<string>;
 }
 
-export type FetchErrorCode =
-  | 'network'
-  | 'cors'
-  | 'timeout'
-  | 'http'
-  | 'rateLimited'
-  | 'tooLarge';
+export type FetchErrorCode = 'network' | 'cors' | 'timeout' | 'http' | 'rateLimited' | 'tooLarge';
 
 export type AttemptCode =
   | 'ok'
@@ -232,7 +226,8 @@ function attemptCodeFor(err: FetchError, isDirect: boolean): AttemptCode {
   if (err.code === 'tooLarge') return 'tooLarge';
   if (err.code === 'timeout') return 'timeout';
   if (err.code === 'http') return 'http';
-  if (err.code === 'network') return connectionRefused(err) ? 'connectionRefused' : isDirect ? 'cors-or-network' : 'http';
+  if (err.code === 'network')
+    return connectionRefused(err) ? 'connectionRefused' : isDirect ? 'cors-or-network' : 'http';
   return isDirect ? 'cors-or-network' : 'http';
 }
 

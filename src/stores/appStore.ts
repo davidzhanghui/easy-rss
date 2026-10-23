@@ -60,7 +60,11 @@ export const useSettingsStore = create<SettingsState>()(
  * No `.dark` class — each theme owns its full token table; we only
  * hint `color-scheme` so UA chrome (scrollbars, form controls) matches.
  */
-export function applyThemeClass(theme: AppSettings['theme'], autoLight: AppSettings['autoLight'], autoDark: AppSettings['autoDark']): void {
+export function applyThemeClass(
+  theme: AppSettings['theme'],
+  autoLight: AppSettings['autoLight'],
+  autoDark: AppSettings['autoDark'],
+): void {
   const root = document.documentElement;
   const systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
   const resolved = resolveTheme(theme, autoLight, autoDark, systemDark);

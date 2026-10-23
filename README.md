@@ -57,7 +57,9 @@ npm run dev      # http://localhost:3100
 npm run build    # tsc -b && vite build → dist/
 npm run preview  # 预览生产构建
 npm test         # 单元测试（Vitest）
-npm run check    # lint + test + build，提交前运行
+npm run lint     # tsc + ESLint
+npm run format   # Prettier 格式化（format:check 仅检查）
+npm run check    # lint + 格式检查 + test + build，提交前运行
 ```
 
 > 在线 Demo 是纯静态部署、**没有配置抓取代理**，所以不允许跨域访问的订阅源会抓取失败（演示数据不受影响）。
@@ -194,8 +196,8 @@ npx wrangler deploy    # 构建由 wrangler.jsonc 触发，用的是 build:publi
 
 - 订阅、文章、阅读状态只存在你浏览器的 IndexedDB / localStorage，应用本身没有后端、账号与遥测
 - Feed 内容一律视为不可信：HTML 经 DOMPurify 清洗，链接只放行 `http(s)`，图片使用 `no-referrer`
-- **外部请求**：为了排版，`index.html` 会从 Google Fonts 加载字体，这会让 Google 看到访问者的 IP；
-  如需完全离线 / 零第三方请求，可移除该 `<link>` 并改用系统字体，或自行托管字体文件
+- **字体自托管**：字体通过 `@fontsource` 随应用打包（`src/fonts.ts`），不再请求 Google Fonts，访问者 IP 不会泄露给字体服务
+- **外部请求**：仅有演示文章里的示例配图来自 `picsum.photos`；点「清除演示数据」后应用不再发起任何第三方请求（抓取订阅源本身除外）
 - 发现漏洞请按 [SECURITY.md](SECURITY.md) 私下报告
 
 ## 已知限制

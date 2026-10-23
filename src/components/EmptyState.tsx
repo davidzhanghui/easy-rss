@@ -22,20 +22,14 @@ export function EmptyState({
       <div className="mb-6 flex h-16 w-16 -rotate-6 items-center justify-center rounded-lg border border-paperedge bg-paper text-envelope shadow-[0_8px_20px_rgba(var(--shadow-rgb),0.12),0_2px_6px_rgba(var(--shadow-rgb),0.08)]">
         <Icon size={26} strokeWidth={1.6} />
       </div>
-      {kicker && (
-        <p className="mb-2 text-[11px] font-medium uppercase tracking-[2.5px] text-faint">
-          {kicker}
-        </p>
-      )}
+      {kicker && <p className="mb-2 text-[11px] font-medium uppercase tracking-[2.5px] text-faint">{kicker}</p>}
       <p className="font-display text-[26px] font-medium tracking-tight text-ink sm:text-[30px]">{title}</p>
       {subtitle && <p className="mt-2 max-w-xs text-[13.5px] leading-6 text-muted">{subtitle}</p>}
       {stats && (
         <div className="mt-7 flex items-stretch gap-6 border-t border-hairsoft pt-5">
           {stats.map((s) => (
             <div key={s.label} className="flex flex-col items-center gap-0.5">
-              <span className="font-display text-[22px] font-semibold tabular-nums text-ink">
-                {s.n}
-              </span>
+              <span className="font-display text-[22px] font-semibold tabular-nums text-ink">{s.n}</span>
               <span className="text-[11px] uppercase tracking-[1px] text-faint">{s.label}</span>
             </div>
           ))}

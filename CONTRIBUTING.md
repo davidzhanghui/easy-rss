@@ -7,14 +7,15 @@
 ```bash
 npm install
 npm run dev        # http://localhost:3100
-npm run check      # lint + test + build（提交前请确保通过）
+npm run check      # lint + 格式检查 + test + build（提交前请确保通过）
+npm run format     # 自动格式化（Prettier）
 ```
 
 要求 Node 18+（推荐 20+）。
 
 ## 约定
 
-- **TypeScript strict**，`npm run lint`（`tsc --noEmit`）必须干净
+- **TypeScript strict**，`npm run lint`（`tsc --noEmit` + ESLint）和 `npm run format:check`（Prettier）必须干净
 - **测试**：`npm test`（Vitest + jsdom）。改动 `parser` / `fetcher` / `sanitize` / `server/rss-proxy`
   时请补用例；安全相关修复请附能在旧实现上失败的回归测试
 - **样式**：用 `src/index.css` 里的语义 token，不要在组件里写裸色值

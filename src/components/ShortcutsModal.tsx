@@ -23,9 +23,7 @@ export function ShortcutsModal() {
         {ROWS.map(([k, desc]) => (
           <div key={k} className="flex items-center justify-between py-1.5 text-sm">
             <span className="text-muted">{desc}</span>
-            <kbd className="kbd !px-2 !py-1 !text-xs !text-strong">
-              {k}
-            </kbd>
+            <kbd className="kbd !px-2 !py-1 !text-xs !text-strong">{k}</kbd>
           </div>
         ))}
       </div>

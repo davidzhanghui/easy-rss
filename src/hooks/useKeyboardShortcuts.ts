@@ -22,16 +22,44 @@ export function useKeyboardShortcuts(h: ShortcutHandlers, enabled = true): void 
       if (mod) return; // Cmd+K handled separately
       if (isEditableTarget(e.target)) return;
       switch (e.key) {
-        case 'j': e.preventDefault(); h.next(); break;
-        case 'k': e.preventDefault(); h.prev(); break;
-        case 'o': e.preventDefault(); h.open(); break;
-        case 's': e.preventDefault(); h.toggleStar(); break;
-        case 'm': e.preventDefault(); h.markRead(); break;
-        case 'u': e.preventDefault(); h.markUnread(); break;
-        case 'r': e.preventDefault(); h.refresh(); break;
-        case '/': e.preventDefault(); h.focusSearch(); break;
-        case '?': e.preventDefault(); h.showHelp(); break;
-        default: break;
+        case 'j':
+          e.preventDefault();
+          h.next();
+          break;
+        case 'k':
+          e.preventDefault();
+          h.prev();
+          break;
+        case 'o':
+          e.preventDefault();
+          h.open();
+          break;
+        case 's':
+          e.preventDefault();
+          h.toggleStar();
+          break;
+        case 'm':
+          e.preventDefault();
+          h.markRead();
+          break;
+        case 'u':
+          e.preventDefault();
+          h.markUnread();
+          break;
+        case 'r':
+          e.preventDefault();
+          h.refresh();
+          break;
+        case '/':
+          e.preventDefault();
+          h.focusSearch();
+          break;
+        case '?':
+          e.preventDefault();
+          h.showHelp();
+          break;
+        default:
+          break;
       }
     };
     window.addEventListener('keydown', onKey);

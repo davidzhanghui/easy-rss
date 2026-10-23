@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Command, Menu, Moon, Plus, RefreshCw, Search, Settings, Sun, WifiOff } from 'lucide-react';
+import { Command, Github, Menu, Moon, Plus, RefreshCw, Search, Settings, Sun, WifiOff } from 'lucide-react';
 import { useT } from '../hooks/useT';
 import { useInvalidate } from '../hooks/useData';
 import { applyThemeFromStore, useSettingsStore, useToastStore, useUIStore } from '../stores/appStore';
@@ -39,7 +39,10 @@ export function TopBar({ onMenu }: { onMenu: () => void }) {
       const failed = results.filter((r) => !r.ok).length;
       useSettingsStore.getState().set({ lastRefreshAllAt: Date.now() });
       invalidate('feeds', 'counts', 'articles');
-      toast(failed === 0 ? t('toastRefreshed') : `${t('toastRefreshed')} (${results.length - failed}/${results.length})`, failed === 0 ? 'success' : 'info');
+      toast(
+        failed === 0 ? t('toastRefreshed') : `${t('toastRefreshed')} (${results.length - failed}/${results.length})`,
+        failed === 0 ? 'success' : 'info',
+      );
     } catch {
       toast(t('toastRefreshFailed'), 'error');
     } finally {
@@ -60,11 +63,7 @@ export function TopBar({ onMenu }: { onMenu: () => void }) {
 
   return (
     <header className="flex h-14 shrink-0 items-center gap-1 border-b border-hairline bg-card px-2 sm:h-16 sm:gap-2 sm:px-4 lg:px-5">
-      <button
-        onClick={onMenu}
-        aria-label="Open navigation"
-        className={cn(iconBtn, 'lg:hidden')}
-      >
+      <button onClick={onMenu} aria-label="Open navigation" className={cn(iconBtn, 'lg:hidden')}>
         <Menu size={19} />
       </button>
       <Link to="/" className="hidden items-center gap-2.5 sm:flex" aria-label={t('appName')}>
@@ -72,12 +71,8 @@ export function TopBar({ onMenu }: { onMenu: () => void }) {
           <LogoMark size={18} />
         </span>
         <span className="leading-tight">
-          <span className="block font-display text-[19px] font-medium tracking-tight text-ink">
-            {t('appName')}
-          </span>
-          <span className="hidden text-[10px] uppercase tracking-[1.5px] text-faint xl:block">
-            {t('tagline')}
-          </span>
+          <span className="block font-display text-[19px] font-medium tracking-tight text-ink">{t('appName')}</span>
+          <span className="hidden text-[10px] uppercase tracking-[1.5px] text-faint xl:block">{t('tagline')}</span>
         </span>
       </Link>
 
@@ -117,12 +112,7 @@ export function TopBar({ onMenu }: { onMenu: () => void }) {
         )
       )}
 
-      <button
-        onClick={refreshAll}
-        aria-label={t('refreshAll')}
-        title={t('refreshAll')}
-        className={iconBtn}
-      >
+      <button onClick={refreshAll} aria-label={t('refreshAll')} title={t('refreshAll')} className={iconBtn}>
         <RefreshCw size={17} className={cn(refreshing && 'animate-spin')} />
       </button>
       <button
@@ -145,10 +135,7 @@ export function TopBar({ onMenu }: { onMenu: () => void }) {
         {resolvedDark ? <Sun size={17} /> : <Moon size={17} />}
       </button>
       <ThemeSwitcher />
-      <button
-        onClick={() => setUI({ addFeedOpen: true })}
-        className="btn btn--primary hidden sm:flex"
-      >
+      <button onClick={() => setUI({ addFeedOpen: true })} className="btn btn--primary hidden sm:flex">
         <Plus size={15} /> {t('addFeed')}
       </button>
       <button
@@ -165,6 +152,16 @@ export function TopBar({ onMenu }: { onMenu: () => void }) {
       >
         <Settings size={17} />
       </button>
+      <a
+        href="https://github.com/davidzhanghui/easy-rss"
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label={t('github')}
+        title={t('github')}
+        className={cn(iconBtn, 'hidden sm:inline-flex')}
+      >
+        <Github size={17} />
+      </a>
     </header>
   );
 }

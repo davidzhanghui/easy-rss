@@ -68,10 +68,7 @@ export function useCounts() {
       const perFeedUnread: Record<string, number> = {};
       await Promise.all(
         feeds.map(async (f) => {
-          perFeedUnread[f.id] = await db.articles
-            .where('[feedId+isRead]')
-            .equals([f.id, FLAG_OFF])
-            .count();
+          perFeedUnread[f.id] = await db.articles.where('[feedId+isRead]').equals([f.id, FLAG_OFF]).count();
         }),
       );
       return {

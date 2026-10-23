@@ -20,16 +20,10 @@ export function ConfirmDialog({
     <Modal open={open} onClose={onCancel} title={t('delete')}>
       <p className="text-sm leading-6 text-body">{message}</p>
       <div className="mt-5 flex justify-end gap-2">
-        <button
-          onClick={onCancel}
-          className="btn btn--ghost"
-        >
+        <button onClick={onCancel} className="btn btn--ghost">
           {t('cancel')}
         </button>
-        <button
-          onClick={onConfirm}
-          className={danger ? 'btn btn--danger-solid' : 'btn btn--primary'}
-        >
+        <button onClick={onConfirm} className={danger ? 'btn btn--danger-solid' : 'btn btn--primary'}>
           {t('confirm')}
         </button>
       </div>
@@ -72,17 +66,10 @@ export function PromptDialog({
           className="field text-sm"
         />
         <div className="mt-5 flex justify-end gap-2">
-          <button
-            type="button"
-            onClick={onCancel}
-            className="btn btn--ghost"
-          >
+          <button type="button" onClick={onCancel} className="btn btn--ghost">
             {t('cancel')}
           </button>
-          <button
-            type="submit"
-            className="btn btn--primary"
-          >
+          <button type="submit" className="btn btn--primary">
             {t('confirm')}
           </button>
         </div>

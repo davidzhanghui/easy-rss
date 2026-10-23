@@ -6,8 +6,7 @@
  */
 
 export type ThemeId =
-  | 'moss' | 'claret' | 'indigo' | 'umber' | 'mulberry' | 'graphite' | 'teal'
-  | 'midnight' | 'dusk' | 'forest';
+  'moss' | 'claret' | 'indigo' | 'umber' | 'mulberry' | 'graphite' | 'teal' | 'midnight' | 'dusk' | 'forest';
 
 export type ThemePref = 'auto' | ThemeId;
 
@@ -23,16 +22,16 @@ export interface ThemeMeta {
 }
 
 export const THEMES: ThemeMeta[] = [
-  { id: 'moss',     zh: '墨绿', en: 'Moss',     bg: '#f3f1e9', accent: '#3d5c47', scheme: 'light' },
-  { id: 'claret',   zh: '酒红', en: 'Claret',   bg: '#f4efe7', accent: '#8b3229', scheme: 'light' },
-  { id: 'indigo',   zh: '藏蓝', en: 'Indigo',   bg: '#f0f2f1', accent: '#33506e', scheme: 'light' },
-  { id: 'umber',    zh: '赭石', en: 'Umber',    bg: '#f6f0e3', accent: '#8a5a2b', scheme: 'light' },
+  { id: 'moss', zh: '墨绿', en: 'Moss', bg: '#f3f1e9', accent: '#3d5c47', scheme: 'light' },
+  { id: 'claret', zh: '酒红', en: 'Claret', bg: '#f4efe7', accent: '#8b3229', scheme: 'light' },
+  { id: 'indigo', zh: '藏蓝', en: 'Indigo', bg: '#f0f2f1', accent: '#33506e', scheme: 'light' },
+  { id: 'umber', zh: '赭石', en: 'Umber', bg: '#f6f0e3', accent: '#8a5a2b', scheme: 'light' },
   { id: 'mulberry', zh: '紫檀', en: 'Mulberry', bg: '#f3eff1', accent: '#6b4a72', scheme: 'light' },
   { id: 'graphite', zh: '松烟', en: 'Graphite', bg: '#f2f2ef', accent: '#4a4a46', scheme: 'light' },
-  { id: 'teal',     zh: '孔雀', en: 'Teal',     bg: '#edf2f1', accent: '#2f6367', scheme: 'light' },
+  { id: 'teal', zh: '孔雀', en: 'Teal', bg: '#edf2f1', accent: '#2f6367', scheme: 'light' },
   { id: 'midnight', zh: '夜读', en: 'Midnight', bg: '#23211c', accent: '#a98a54', scheme: 'dark' },
-  { id: 'dusk',     zh: '暮蓝', en: 'Dusk',     bg: '#1b1f2a', accent: '#6f8fc4', scheme: 'dark' },
-  { id: 'forest',   zh: '深林', en: 'Forest',   bg: '#1c211d', accent: '#7fa87f', scheme: 'dark' },
+  { id: 'dusk', zh: '暮蓝', en: 'Dusk', bg: '#1b1f2a', accent: '#6f8fc4', scheme: 'dark' },
+  { id: 'forest', zh: '深林', en: 'Forest', bg: '#1c211d', accent: '#7fa87f', scheme: 'dark' },
 ];
 
 export const LIGHT_THEMES = THEMES.filter((t) => t.scheme === 'light');
