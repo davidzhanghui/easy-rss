@@ -1,0 +1,14 @@
+{
+  // Cloudflare Workers (static assets) — auto-deployed by Workers Builds on push to main.
+  // The Worker name must match the project name in the Cloudflare dashboard.
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "easy-rss",
+  "compatibility_date": "2026-10-19",
+  "workers_dev": true,
+  "build": { "command": "npm run build" },
+  "assets": {
+    "directory": "./dist",
+    // SPA: unknown paths (e.g. /unread, /settings) fall back to index.html
+    "not_found_handling": "single-page-application"
+  }
+}
