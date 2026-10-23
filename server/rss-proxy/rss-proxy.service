@@ -1,0 +1,18 @@
+[Unit]
+Description=Transparent RSS fetch proxy for local reader
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=rssproxy
+Group=rssproxy
+EnvironmentFile=/etc/rss-proxy.env
+ExecStart=/usr/bin/node /opt/rss-proxy/server.mjs
+Restart=on-failure
+RestartSec=2
+NoNewPrivileges=true
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target

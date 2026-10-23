@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<opml version="2.0">
+  <head><title>EasyRSS 推荐订阅（2026-09 验证可用）</title></head>
+  <body>
+    <outline text="AI" title="AI">
+      <outline type="rss" text="AIHOT — 精选全文" title="AIHOT — 精选全文" xmlUrl="https://aihot.news/feed/full.xml?aihot_actor=8c123308-c69a-406a-9b63-b10fa11f88fa" htmlUrl="https://aihot.news/"/>
+      <outline type="rss" text="The Decoder" title="The Decoder" xmlUrl="https://the-decoder.com/feed/" htmlUrl="https://the-decoder.com/"/>
+      <outline type="rss" text="OpenAI News" title="OpenAI News" xmlUrl="https://openai.com/blog/rss.xml" htmlUrl="https://openai.com/"/>
+      <outline type="rss" text="Simon Willison" title="Simon Willison" xmlUrl="https://simonwillison.net/atom/everything/" htmlUrl="https://simonwillison.net/"/>
+      <outline type="rss" text="Google DeepMind" title="Google DeepMind" xmlUrl="https://deepmind.google/blog/rss.xml" htmlUrl="https://deepmind.google/"/>
+      <outline type="rss" text="arXiv cs.AI" title="arXiv cs.AI" xmlUrl="https://rss.arxiv.org/rss/cs.AI" htmlUrl="https://arxiv.org/list/cs.AI/recent"/>
+    </outline>
+    <outline text="Technology" title="Technology">
+      <outline type="rss" text="Hacker News: Front Page" title="Hacker News: Front Page" xmlUrl="https://hnrss.org/frontpage" htmlUrl="https://news.ycombinator.com/"/>
+      <outline type="rss" text="Ars Technica - All content" title="Ars Technica - All content" xmlUrl="https://feeds.arstechnica.com/arstechnica/index" htmlUrl="https://arstechnica.com/"/>
+      <outline type="rss" text="The Verge" title="The Verge" xmlUrl="https://www.theverge.com/rss/index.xml" htmlUrl="https://www.theverge.com/"/>
+      <outline type="rss" text="MIT Technology Review" title="MIT Technology Review" xmlUrl="https://www.technologyreview.com/feed/" htmlUrl="https://www.technologyreview.com/"/>
+      <outline type="rss" text="Daring Fireball" title="Daring Fireball" xmlUrl="https://daringfireball.net/feeds/main" htmlUrl="https://daringfireball.net/"/>
+    </outline>
+    <outline text="Programming" title="Programming">
+      <outline type="rss" text="The GitHub Blog" title="The GitHub Blog" xmlUrl="https://github.blog/feed/" htmlUrl="https://github.blog/"/>
+      <outline type="rss" text="Stack Overflow Blog" title="Stack Overflow Blog" xmlUrl="https://stackoverflow.blog/feed/" htmlUrl="https://stackoverflow.blog/"/>
+      <outline type="rss" text="美团 · 技术团队" title="美团 · 技术团队" xmlUrl="https://tech.meituan.com/feed/" htmlUrl="https://tech.meituan.com/"/>
+      <outline type="rss" text="Martin Fowler" title="Martin Fowler" xmlUrl="https://martinfowler.com/feed.atom" htmlUrl="https://martinfowler.com/"/>
+      <outline type="rss" text="Mozilla Hacks" title="Mozilla Hacks" xmlUrl="https://hacks.mozilla.org/feed/" htmlUrl="https://hacks.mozilla.org/"/>
+      <outline type="rss" text="Cloudflare Blog" title="Cloudflare Blog" xmlUrl="https://blog.cloudflare.com/rss/" htmlUrl="https://blog.cloudflare.com/"/>
+    </outline>
+    <outline text="中文精选" title="中文精选">
+      <outline type="rss" text="阮一峰的网络日志" title="阮一峰的网络日志" xmlUrl="https://www.ruanyifeng.com/blog/atom.xml" htmlUrl="https://www.ruanyifeng.com/"/>
+      <outline type="rss" text="少数派" title="少数派" xmlUrl="https://sspai.com/feed" htmlUrl="https://sspai.com/"/>
+      <outline type="rss" text="IT之家" title="IT之家" xmlUrl="https://www.ithome.com/rss/" htmlUrl="https://www.ithome.com/"/>
+      <outline type="rss" text="V2EX" title="V2EX" xmlUrl="https://www.v2ex.com/index.xml" htmlUrl="https://www.v2ex.com/"/>
+    </outline>
+    <outline text="Design" title="Design">
+      <outline type="rss" text="Smashing Magazine" title="Smashing Magazine" xmlUrl="https://www.smashingmagazine.com/feed/" htmlUrl="https://www.smashingmagazine.com/"/>
+    </outline>
+  </body>
+</opml>

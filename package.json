@@ -1,0 +1,66 @@
+{
+  "name": "easy-rss",
+  "private": true,
+  "version": "1.0.0",
+  "license": "MIT",
+  "type": "module",
+  "description": "Modern Local-First frontend-only RSS reader",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc -b && vite build",
+    "preview": "vite preview",
+    "lint": "tsc --noEmit",
+    "test": "vitest run",
+    "check": "npm run lint && npm run test && npm run build"
+  },
+  "dependencies": {
+    "@tanstack/react-query": "^5.62.11",
+    "date-fns": "^4.1.0",
+    "dexie": "^4.0.11",
+    "dexie-react-hooks": "^1.1.7",
+    "dompurify": "^3.1.10",
+    "lucide-react": "^0.469.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-router-dom": "^7.18.4",
+    "zustand": "^5.0.2"
+  },
+  "devDependencies": {
+    "@tailwindcss/vite": "^4.0.0",
+    "@types/dompurify": "^3.0.5",
+    "@types/node": "^22.10.2",
+    "@types/react": "^18.3.18",
+    "@types/react-dom": "^18.3.5",
+    "@vitejs/plugin-react": "^4.3.4",
+    "jsdom": "^26.1.0",
+    "tailwindcss": "^4.0.0",
+    "typescript": "~5.6.3",
+    "vite": "^6.0.6",
+    "vitest": "^5.0.5"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "keywords": [
+    "rss",
+    "atom",
+    "rss-reader",
+    "feed-reader",
+    "opml",
+    "local-first",
+    "pwa",
+    "offline-first",
+    "indexeddb",
+    "react",
+    "typescript",
+    "vite"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/davidzhanghui/easy-rss.git"
+  },
+  "homepage": "https://github.com/davidzhanghui/easy-rss#readme",
+  "bugs": {
+    "url": "https://github.com/davidzhanghui/easy-rss/issues"
+  }
+}

@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="EasyRSS">
+  <style>
+    .badge { fill: #faf9f5; stroke: #e6dfd8; }
+    .arcs { stroke: #141413; }
+    .dot { fill: #cc785c; }
+    @media (prefers-color-scheme: dark) {
+      .badge { fill: #161618; stroke: rgba(255, 255, 255, 0.14); }
+      .arcs { stroke: #faf9f5; }
+    }
+  </style>
+  <rect class="badge" x="0.75" y="0.75" width="62.5" height="62.5" rx="14.5" stroke-width="1.5" />
+  <g transform="translate(1.6 -1.5)">
+    <g class="arcs" fill="none" stroke-width="7" stroke-linecap="round">
+      <path d="M16 32A16 16 0 0 1 32 48" />
+      <path d="M16 16A32 32 0 0 1 48 48" />
+    </g>
+    <circle class="dot" cx="16" cy="48" r="6.4" />
+  </g>
+</svg>

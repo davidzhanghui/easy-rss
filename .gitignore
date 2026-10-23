@@ -1,0 +1,29 @@
+# ---- 敏感 / 私有（务必不要提交）----
+# 本地环境变量：含自建代理 token 等机密
+.env
+.env.*.local
+# ---- 本地运行时产物 ----
+# rss.sh 的 dev 日志与 pid
+.run/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# ---- 依赖与构建产物 ----
+node_modules/
+dist/
+dist-ssr/
+*.tsbuildinfo
+
+# ---- 编辑器 / 系统 ----
+.vscode/*
+!.vscode/extensions.json
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+.DS_Store
